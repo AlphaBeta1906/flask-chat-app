@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %} chat room {% endblock %}
+{% block content %}
+	<style>
+		li{
+			list-style-type: none;
+			padding-top: 15px;
+		}
+		#msg{
+			height: 550px;
+			overflow: auto;
+			}
+	</style>
+	<div class="container-fluid my-4">
+		<div id="msg" class="mt-3 container-fluid w-100">
+			{% for message in messages %}
+				<li class="card rounded shadow my-5">
+					<div class="container">
+						<p>{{message.date}}</p>
+						<p>{{message.username}} : {{message.message}}</p>
+					</div>
+				</li>
+			{% endfor %}
+		</div>
+		<div class="mt-4">
+				
+			<label id="username" class="mx-3"> {{session["username"]}} </label>
+			<input type="text" id="message" placeholder="your message here" class="w-50">
+			
+				<button id="send" type="submit" class="btn btn-outline-success">Send</button>
+				<a href=" {{url_for("logout")}}  " title="logout" class="btn btn-outline-danger">Logout</a>
+			
+		</div>
+	</div>
+	<script type="text/javascript">
+		var socket = io.connect()
+		socket.on('message',function(response){
+			var parse_response = JSON.parse(response)
+			$('#msg').append(
+			'<li class="card rounded shadow my-5">' + 
+			'<div class = "container">'+
+			'<p>'+
+			parse_response["date"]+'</p>' +
+			'<p>' + parse_response["sender"] + ' : '
+			+ parse_response["msg"] + '</p>' + 
+			'</div> </li>')
+			$("#msg").scrollTop($("#msg")[0].scrollHeight);
+				}
+			);
+				$('#send').on('click',function(){
+						let date_ob = new Date();
+						// adjust 0 before single digit date
+						let date = ("0" + date_ob.getDate()).slice(-2);
+						// current month
+						let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+						// current year
+						let year = date_ob.getFullYear();
+						// current hours
+						let hours = date_ob.getHours();
+						// current minutes
+						let minutes = date_ob.getMinutes();
+						// current seconds
+						let seconds = date_ob.getSeconds();
+						console.log(Math.round(seconds))
+						var message_string = JSON.stringify({
+												sender: $("#username").html(),
+												msg: $("#message").val(),
+												date:year + "/" + month + "/" + date + " " + hours + ":" + minutes + ":" + Math.round(seconds)
+											})
+						if ($("#sender").val() === "" || $("#message").val() === "") {
+							alert("empty value")
+						}
+						else{
+							socket.send(message_string)
+							$("#message").val('');
+						}
+					});
+			$('#textbox').on('keypress', function (e) {
+			});
+
+			$('#msg').keypress(function(event){
+  				if(event.keyCode == 13){
+    				console.log("s")
+  				}
+			});
+			/*
+			$(window).on('load', function() {
+				$("#msg").scrollTop($("#msg")[1].scrollHeight);
+			});
+			*/
+		</script>
+	{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Register {% endblock %}
+{% block content %}
+	<div class="container">
+		<div class=" mt-5">
+			<form action=" {{url_for("register")}} " method="post" accept-charset="utf-8"> 	
+				<center>
+					<div class="card  w-full container">
+						<input type="text" id="username" name="username" class="mt-2" placeholder="enter your username" required>
+						<br>
+						<center>
+							
+							<button id="send" type="submit" class="w-75 mt-2 mb-4 btn btn-primary">Register</button>
+						</center>
+					</div>
+				</center>
+			</form>
+		</div>
+	</div>
+{% endblock %}
