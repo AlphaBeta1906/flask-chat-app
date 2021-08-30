@@ -24,9 +24,9 @@ db = SQLAlchemy(app, session_options={"autoflush": False})
 migrate = Migrate(app, db)
 
 app.config["SECRET_KEY"] = os.urandom(128)
-app.config[
-    "SQLALCHEMY_DATABASE_URI"
-] = "mysql+pymysql://root:f%40r1Zi1906@localhost:3306/chat"
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    "mysql+pymysql://AlphaChat:f@r1Zi1906@Codeland.mysql.pythonanywhere-services.com/AlphaChat$chat",
+)
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 86400
 app.config["SQLALCHEMY_POOL_SIZE"] = 200
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 100
