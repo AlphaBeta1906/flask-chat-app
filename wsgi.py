@@ -12,11 +12,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_socketio import SocketIO, send
 
-from sqlalchemy.sql import func
+import markdown
 
-from functools import wraps
 import os
-from datetime import datetime
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -38,6 +36,13 @@ class Message(db.Model):
     username = db.Column(db.String(24), nullable=False)
     message = db.Column(db.String(2000), nullable=False)
     date = db.Column(db.String(2000))
+
+
+@app.template_filter("render_content")
+def render(content: str):
+    return markdown.markdown(
+        content, safe_mode=True, enable_attributes=False, extensions=["pymdownx.magiclink", "pymdownx.tilde"]
+    )
 
 
 @app.route("/chat_room")
