@@ -22,11 +22,13 @@ db = SQLAlchemy(app, session_options={"autoflush": False})
 migrate = Migrate(app, db)
 
 app.config["SECRET_KEY"] = os.urandom(128)
-app.config["SQLALCHEMY_DATABASE_URI"] = "your_database_url"
+app.config[
+    "SQLALCHEMY_DATABASE_URI"
+] = "mysql+pymysql://root:f%40r1Zi1906@localhost:3306/chat"
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 86400
 app.config["SQLALCHEMY_POOL_SIZE"] = 200
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 100
-app.config["ENV"] = "development"
+app.config["ENV"] = "production"
 
 
 class Message(db.Model):
@@ -39,10 +41,7 @@ class Message(db.Model):
 @app.template_filter("render_content")
 def render(content: str):
     return markdown.markdown(
-        content,
-        safe_mode=True,
-        enable_attributes=False,
-        extensions=["pymdownx.magiclink", "pymdownx.tilde"],
+        content, safe_mode=True, enable_attributes=False, extensions=["pymdownx.magiclink", "pymdownx.tilde"]
     )
 
 
