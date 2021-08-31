@@ -10,5 +10,6 @@ virtualenv venv # use pip install virtualenv
 . venv/bin/activate # venv/scripts/activate for windows
 
 pip install -r requiremenst.txt
+flask db migrate # to migrate create table in database
 python wsgi.py
 ```
