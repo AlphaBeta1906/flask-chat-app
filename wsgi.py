@@ -22,7 +22,9 @@ db = SQLAlchemy(app, session_options={"autoflush": False})
 migrate = Migrate(app, db)
 
 app.config["SECRET_KEY"] = os.urandom(128)
-app.config["SQLALCHEMY_DATABASE_URI"] = "your_database_url"
+app.config[
+    "SQLALCHEMY_DATABASE_URI"
+] = "mysql://root:Jib8ke3PQNcTkjaotZBq@containers-us-west-14.railway.app:5799/railway"
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 86400
 app.config["SQLALCHEMY_POOL_SIZE"] = 200
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 100
