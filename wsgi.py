@@ -22,16 +22,16 @@ db = SQLAlchemy(app, session_options={"autoflush": False})
 migrate = Migrate(app, db)
 
 app.config["SECRET_KEY"] = os.urandom(128)
-app.config[
-    "SQLALCHEMY_DATABASE_URI"
-] = "mysql+pymysql://root:f%40r1Zi1906@localhost:3306/chat"
+app.config["SQLALCHEMY_DATABASE_URI"] = "your_database_url"
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 86400
 app.config["SQLALCHEMY_POOL_SIZE"] = 200
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 100
-app.config["ENV"] = "production"
+app.config["ENV"] = "development"
 
 
 class Message(db.Model):
+    """table model"""
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(24), nullable=False)
     message = db.Column(db.String(2000), nullable=False)
@@ -41,7 +41,10 @@ class Message(db.Model):
 @app.template_filter("render_content")
 def render(content: str):
     return markdown.markdown(
-        content, safe_mode=True, enable_attributes=False, extensions=["pymdownx.magiclink", "pymdownx.tilde"]
+        content,
+        safe_mode=True,
+        enable_attributes=False,
+        extensions=["fenced_code", "pymdownx.magiclink", "pymdownx.tilde"],
     )
 
 
@@ -86,6 +89,7 @@ def handleMessage(msg):
     import json
 
     response = json.loads(msg)
+    print(msg)
     save_message(response["sender"], response["msg"], response["date"])
     send(msg, broadcast=True)
 
