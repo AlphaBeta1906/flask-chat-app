@@ -1,13 +1,4 @@
-from flask import (
-    Flask,
-    render_template,
-    jsonify,
-    request,
-    session,
-    redirect,
-    url_for,
-    flash,
-)
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_socketio import SocketIO, send
