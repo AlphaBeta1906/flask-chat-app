@@ -1,6 +1,6 @@
 # chat-app
 
-a simple chat website build using python flask,socketio and mysql as database
+a simple chat website build using python flask,socketio and mysql as database and also have markdown support
 
 ### How to run 
 ```bash
