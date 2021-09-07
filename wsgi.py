@@ -15,7 +15,7 @@ migrate = Migrate(app, db)
 app.config["SECRET_KEY"] = os.urandom(128)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "mysql://root:Jib8ke3PQNcTkjaotZBq@containers-us-west-14.railway.app:5799/railway"
+] = "mysql+pymysql://root:f@r1Zi1906@localhost:3306/chat"
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 86400
 app.config["SQLALCHEMY_POOL_SIZE"] = 200
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 100
