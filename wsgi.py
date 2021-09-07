@@ -68,8 +68,11 @@ def logout():
     return redirect(url_for("register"))
 
 
+# if you dont have database just delete this function
 def save_message(sender, message, date):
-
+    """
+    function to save message into database
+    """
     add_message = Message(username=sender, message=message, date=date)
     db.session.add(add_message)
     db.session.commit()
@@ -81,7 +84,9 @@ def handleMessage(msg):
 
     response = json.loads(msg)
     print(msg)
+    # if you dont have database just delete one line below
     save_message(response["sender"], response["msg"], response["date"])
+    # ---- delete line above ----
     send(msg, broadcast=True)
 
 
