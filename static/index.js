@@ -19,7 +19,7 @@
 
 			ReactDOM.render(
 						<div class="container-fluid">
-							<p class="fw-bold">{parse_response.sender} : </p> 
+						 	<p class = "fw-bold" > {parse_response.sender} : </p>  
 							<p id="message-body"  
 							dangerouslySetInnerHTML={{ __html: render_markdown(parse_response.msg)  }}></p>
 							<p>{parse_response.date}</p>

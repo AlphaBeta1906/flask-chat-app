@@ -29,16 +29,6 @@ class Message(db.Model):
     date = db.Column(db.String(2000))
 
 
-@app.template_filter("render_content")
-def render(content: str):
-    return markdown.markdown(
-        content,
-        safe_mode=True,
-        enable_attributes=False,
-        extensions=["fenced_code", "pymdownx.magiclink", "pymdownx.tilde"],
-    )
-
-
 @app.route("/chat_room")
 def chat_room():
     print(session)
@@ -88,4 +78,4 @@ def handleMessage(msg):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, port=8000)
